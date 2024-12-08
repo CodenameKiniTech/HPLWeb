@@ -1,13 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/utils/supabaseClient';
+import { getSession } from '@/utils/auth';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const session = await getSession();
+      if (session) {
+        window.location.href = '/pages/dashboard';
+      } else {
+        setLoading(false);
+      }
+    };
+    checkAuth();
+  }, []);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -15,6 +29,10 @@ const Signup = () => {
     if (error) setError(error.message);
     else alert('Check your email for the confirmation link!');
   };
+
+  if (loading) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -38,7 +56,6 @@ const Signup = () => {
         />
         <button className="bg-green-500 text-white px-4 py-2 rounded w-full">Sign Up</button>
         {error && <p className="text-red-500 mt-3">{error}</p>}
-        {/* Navigation to Login */}
         <p className="mt-4">
           Already have an account?{' '}
           <Link href="/auth/login">

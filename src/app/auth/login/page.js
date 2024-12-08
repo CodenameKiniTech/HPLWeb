@@ -1,20 +1,39 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link'; // Import Link for navigation
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { supabase } from '@/utils/supabaseClient';
+import { getSession } from '@/utils/auth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true); // Add a loading state
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const session = await getSession(); // Check if user is already logged in
+      if (session) {
+        window.location.href = '/pages/dashboard'; // Redirect authenticated users
+      } else {
+        setLoading(false); // Only show the page after confirming the user is not logged in
+      }
+    };
+    checkAuth();
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) setError(error.message);
-    else window.location.href = '/pages/dashboard';
+    else window.location.href = '/pages/dashboard'; // Redirect to dashboard on successful login
   };
+
+  if (loading) {
+    // Show a blank screen or spinner while checking authentication
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -38,7 +57,6 @@ const Login = () => {
         />
         <button className="bg-blue-500 text-white px-4 py-2 rounded w-full">Login</button>
         {error && <p className="text-red-500 mt-3">{error}</p>}
-        {/* Navigation to Signup */}
         <p className="mt-4">
           Don't have an account?{' '}
           <Link href="/auth/signup">
