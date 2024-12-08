@@ -14,17 +14,16 @@ export default function Home() {
       className={`min-h-screen flex flex-col justify-between bg-gradient-to-b from-[#FBAD26] to-white px-4 ${righteous.className}`}
     >
       {/* Top Section */}
-      <div className="text-center space-y-6 pt-12 md:pt-16">
-        <h1 className="text-6xl md:text-8xl font-bold text-white drop-shadow-lg tracking-wider">
-          WELCOME
-        </h1>
-        <h2 className="text-2xl md:text-4xl font-bold text-white drop-shadow-md tracking-wide">
+      <div className="text-center space-y-20 pt-12 md:pt-16">
+        <h1 className="text-8xl md:text-15lx font-bold text-white drop-shadow-lg tracking-wider">
           HENERAL PRINTING LAB
-        </h2>
-        <div className="mt-20"> {/* Add spacing above the button */}
+        </h1>
+
+        {/* Add larger spacing above the button */}
+        <div className="mt-32">
           <Link
             href="/auth/login"
-            className="inline-block px-8 py-3 text-xl text-white border-2 border-white rounded-full transition-transform hover:scale-105 hover:bg-white/10"
+            className="inline-block px-6 py-2 text-l text-white border-2 border-white rounded-full transition-transform hover:scale-105 hover:bg-white/10"
           >
             GET STARTED
           </Link>
@@ -38,7 +37,7 @@ export default function Home() {
             src="/assets/DiplaysLP.png?height=400&width=1200"
             alt="T-shirt designs showcase"
             fill
-            className="object-contain" // Ensures the image fits properly
+            className="object-contain"
             priority
           />
         </div>

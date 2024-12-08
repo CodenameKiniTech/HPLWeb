@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { supabase } from '@/utils/supabaseClient';
 import { getSession } from '@/utils/auth';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -35,36 +38,88 @@ const Signup = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <form className="bg-white p-6 rounded shadow-md" onSubmit={handleSignup}>
-        <h2 className="text-lg font-bold mb-4">Sign Up</h2>
-        <input
-          className="p-2 mb-3 w-full border rounded"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          className="p-2 mb-3 w-full border rounded"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button className="bg-green-500 text-white px-4 py-2 rounded w-full">Sign Up</button>
-        {error && <p className="text-red-500 mt-3">{error}</p>}
-        <p className="mt-4">
-          Already have an account?{' '}
-          <Link href="/auth/login">
-            <span className="text-blue-500 underline cursor-pointer">Login</span>
-          </Link>
-        </p>
-      </form>
+    <div className="flex min-h-screen bg-[#FBAD26]">
+      <div className="flex flex-1 items-center justify-center p-8">
+        <div className="w-full max-w-[1000px] rounded-3xl bg-white p-8 shadow-lg">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            {/* Left side with logo and uniforms */}
+            <div className="flex flex-col items-center justify-center space-y-6">
+              <Image
+                src="/assets/HPLogo.png"
+                alt="HRL Logo"
+                width={150}
+                height={150}
+                className="mb-"
+              />
+              <div className="relative h-[400px] w-full">
+                <Image
+                  src="/assets/DisplaySU.png"
+                  alt="Uniforms"
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </div>
+            </div>
+
+            {/* Right side with signup form */}
+            <div className="flex flex-col justify-center p-6">
+              <h2 className="mb-8 text-center text-4xl font-bold text-[#FBAD26]">
+                SIGNUP
+              </h2>
+              <form onSubmit={handleSignup} className="space-y-6">
+                <input
+                  className="w-full rounded-lg border-2 border-[#FBAD26] bg-transparent p-3 placeholder-[#FBAD26] focus:outline-none focus:ring-2 focus:ring-[#FBAD26]"
+                  type="text"
+                  placeholder="FULLNAME"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+                <input
+                  className="w-full rounded-lg border-2 border-[#FBAD26] bg-transparent p-3 placeholder-[#FBAD26] focus:outline-none focus:ring-2 focus:ring-[#FBAD26]"
+                  type="text"
+                  placeholder="USERNAME"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+                <input
+                  className="w-full rounded-lg border-2 border-[#FBAD26] bg-transparent p-3 placeholder-[#FBAD26] focus:outline-none focus:ring-2 focus:ring-[#FBAD26]"
+                  type="email"
+                  placeholder="EMAIL"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <input
+                  className="w-full rounded-lg border-2 border-[#FBAD26] bg-transparent p-3 placeholder-[#FBAD26] focus:outline-none focus:ring-2 focus:ring-[#FBAD26]"
+                  type="password"
+                  placeholder="PASSWORD"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button className="w-full rounded-lg bg-[#FBAD26] p-3 text-lg font-semibold text-white transition-colors hover:bg-[#e99d15]">
+                  SIGNUP
+                </button>
+                {error && <p className="text-center text-red-500">{error}</p>}
+              </form>
+              <p className="mt-6 text-center text-[#FBAD26]">
+                Already have an account?{' '}
+                <Link
+                  href="/auth/login"
+                  className="font-semibold hover:underline"
+                >
+                  Login
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Signup;
+
